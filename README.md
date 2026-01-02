@@ -252,4 +252,21 @@ var orig_map = scr_84_load_map_json(orig_filename);
 
 ---
 
-## End of Document
+
+##  Touch Controls
+
+Deltaquick includes built-in **touch controls**.
+
+To enable or disable them:
+
+1. Swipe **to the right** on the screen while the game is running.
+2. A menu will appear.
+3. From this menu, you can **enable or disable touch controls** at any time.
+
+---
+
+##  Credits
+
+- **McArthur** — Deltaquick
+- **AngelinePuzzle** — Scripts
+
