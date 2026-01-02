@@ -1,52 +1,25 @@
-Deltaquick Wiki
-Welcome
+# Deltaquick Porting Tools
 
-Welcome to the Deltaquick Porting Tools Wiki.
-This wiki explains how to properly port Deltarune (Windows) modifications to Deltaquick (Android) using Undertale Mod Tool.
-!!!!!!!!Advanced users only
-This documentation assumes you already know how to modify Deltarune using Undertale Mod Tool.
+## Important Notice
 
-Table of Contents
+**WARNING:**  
+This document is intended **only for advanced users** who know how to use **Undertale Mod Tool** and how to modify **Deltarune for Windows**.
 
-Requirements
+- **Undertale Mod Tool** is a program used to modify Undertale / Deltarune on **Windows and Linux**.
+- It is **100% required** in order to follow this guide and port modifications to **Deltaquick (Android)**.
 
-Deltaquick File System
+---
 
-Undertale Mod Tool Scripts
+## Deltaquick File System
 
-game_change_android()
+Before adapting your modifications to Deltaquick, you must understand how its file system works.
 
-init_external_dir()
+> **IMPORTANT:**  
+> You can only access these files **through the Save Manager built into Deltaquick**.
 
-Save System Fix (Mandatory)
+### File paths used by Deltaquick
 
-Chapter 3 Video Fix
-
-FIX_AUDIO.csx
-
-Music Fix
-
-Loading game.droid Files
-
-Chapter 1 Language Fix
-
-Requirements
-
-Undertale Mod Tool (Windows or Linux)
-
-Latest official version of Deltarune
-
-Deltaquick (Android)
-
- Demo versions from 2018 and 2021 are NOT supported
-
-Deltaquick File System
-
-Before porting any mod, you must understand how Deltaquick stores and loads files.
-
- Files are accessible ONLY through the Save Manager inside Deltaquick.
-
-File layout
+```
 /data/user/0/com.bookerpuzzle.deltaquick/files/game.droid
     → Chapter Select
 
@@ -63,117 +36,150 @@ File layout
     → Chapter 4
 
 /data/user/0/com.bookerpuzzle.deltaquick/files/mus/
-    → Music files
+    → Deltarune music files
+```
 
-Undertale Mod Tool Scripts
+### Loading a modified `data.win`
 
-Deltaquick provides a script called tools.csx.
+1. Rename your modified `data.win` to **`game.droid`**
+2. Open **Deltaquick → Save Manager**
+3. Replace the file inside the corresponding chapter folder
 
-Installing tools.csx
+### Compatibility Warning
 
-Open Undertale Mod Tool
+Deltaquick is **only compatible with the latest official version of Deltarune**.  
+The **2018 and 2021 Demo versions are NOT supported**.
 
-Go to Scripts → Run Other Script
+---
 
-Select tools.csx
+## Undertale Mod Tool Scripts
 
-Run the script
+Deltaquick includes a script called **`tools.csx`**.
 
-This adds two new functions:
+### Installing `tools.csx`
 
-game_change_android()
+1. Open **Undertale Mod Tool**
+2. Go to `Scripts → Run Other Script`
+3. Select `tools.csx`
+4. Run the script
 
-init_external_dir()
+After running it, two new functions will be available:
 
- All script modifications must be done inside Undertale Mod Tool
+- `game_change_android()`
+- `init_external_dir()`
 
-game_change_android()
+> **ALL OF THIS MUST BE DONE INSIDE UNDERTALE MOD TOOL**
 
-Used to switch between different game.droid files.
+---
 
-Limitations
+## `game_change_android()`
 
-Only folders named chapterX_windows are supported
+This function allows switching between different `game.droid` files.
 
-Any other name will not work
+### Limitations
 
-Change chapter
+- You can only switch between folders named `chapterX_windows`
+- Using any other name **will not work**
+
+### Change chapter
+
+```gml
 game_change_android("chapter" + chapstring + "_windows");
+```
 
-Return to Chapter Select
+### Return to Chapter Select
+
+```gml
 game_change_android("");
+```
 
-init_external_dir()
+---
 
-Grants access to Deltaquick’s internal storage.
+##  `init_external_dir()`
 
-Returned path
+This function grants `game.droid` access to the app’s internal storage, removing Android file access limitations.
+
+It returns the following path as a string:
+
+```
 /data/user/0/com.bookerpuzzle.deltaquick/files/
+```
 
-Recommended usage
+### Recommended usage
+
+```gml
 // obj_time_Create_0
 global.savepath = init_external_dir();
+```
 
+This global variable is **mandatory** to avoid breaking the save system.
 
-This global variable is required for proper file access on Android.
+---
 
-Save System Fix (Mandatory)
+## Save System Fix (MANDATORY)
 
-To prevent save corruption, ALL game.droid files must be modified.
+To properly adapt the save system for Deltaquick, you **must modify the following functions in ALL `game.droid` files**:
 
-Replace the following functions:
-
+```gml
 ossafe_file_delete         = return file_delete(global.savepath + arg0);
 ossafe_file_exists         = return file_exists(global.savepath + arg0);
 ossafe_file_text_open_read = return file_text_open_read(global.savepath + arg0);
 ossafe_file_text_open_write= return file_text_open_write(global.savepath + arg0);
 ossafe_ini_open            = ini_open(global.savepath + arg0);
+```
 
+> **THIS STEP IS REQUIRED**  
+> Skipping it will cause save data corruption.
 
- Skipping this step WILL break saves
+---
 
-Chapter 3 Video Fix
+## Special Case: Deltarune Chapter 3 Video Fix
 
-Chapter 3 loads a video from:
+Chapter 3 loads a video from the following path:
 
+```
 /data/user/0/com.bookerpuzzle.deltaquick/files/chapter3_windows/vid/
+```
 
-Fix steps
+### How to fix
 
-Open object:
+1. Open **Undertale Mod Tool**
+2. Navigate to object: `obj_ch3_couch_video_Create_0`
+3. Find this line:
 
-obj_ch3_couch_video_Create_0
-
-
-Replace:
-
+```gml
 video_open("vid/" + file_name + ".mp4");
+```
 
+4. Replace it (or add an Android case) with:
 
-With:
-
+```gml
 video_open(global.savepath + "chapter3_windows/vid/" + file_name + ".mp4");
+```
 
-FIX_AUDIO.csx
+---
 
-This script fixes sound effects (SFX).
+## FIX_AUDIO.csx
 
-Applies to all chapters
+This script fixes **sound effects (SFX)** for each chapter.
 
-Do NOT apply to Chapter Select
+- **Does NOT fix music**
+- Must be executed **only once**
+- Apply it to all chapters **EXCEPT Chapter Select**
 
-Must be executed only once
+---
 
-Music Fix
+## Fixing Music Playback
 
-Music will not play unless this step is done.
+After completing the previous steps, you may notice that music does not play.
 
-Steps
+### How to fix
 
-Open script: snd_init
+1. Open **Undertale Mod Tool**
+2. Locate the script: `snd_init`
+3. Replace the music directory logic with:
 
-Replace music directory logic with:
-
+```gml
 if (global.launcher)
 {
     if (os_type == os_android)
@@ -186,42 +192,48 @@ if (os_type == os_android)
     dir = global.savepath + "mus/";
 else
     dir = working_directory + "../mus/";
+```
 
+> This must be done in **every chapter from Chapter 1 to Chapter 4**.
 
- Must be done in Chapter 1 → Chapter 4
+---
 
-Loading game.droid Files
-Steps
+## Loading `game.droid / data.win` into Deltaquick
 
-Rename modified data.win → game.droid
+1. Rename your modified `data.win` to **`game.droid`**
+2. Open **Deltaquick → Save Manager**
+3. Enter the desired chapter folder (e.g. `chapter4_windows`)
+4. Press **Load Files**
+5. Select your `game.droid`
 
-Open Deltaquick → Save Manager
+The existing file will be replaced.  
+Repeat this process for each chapter.
 
-Navigate to the target chapter folder
+---
 
-Press Load Files
+## Chapter 1 Language Fix
 
-Select your game.droid
+> **THIS MUST ALSO BE DONE IN UNDERTALE MOD TOOL**
 
-Repeat for each chapter.
+Chapter 1 loads its strings from `lang_en.json`.
 
-Chapter 1 Language Fix
+### Script to edit
+`scr_84_lang_load`
 
-Chapter 1 loads text from lang_en.json.
+### Replace this code
 
-Script to edit
-
-scr_84_lang_load
-
-Replace this code
+```gml
 var name = "lang_" + global.lang + ".json";
 var orig_filename = working_directory + "lang/" + name;
 var new_filename = working_directory + "lang-new/" + name;
 var filename = orig_filename;
 var type = "orig";
 var orig_map = scr_84_load_map_json(orig_filename);
+```
 
-With this
+### With this
+
+```gml
 var name = "lang_" + global.lang + ".json";
 
 var orig_filename = global.savepath + "chapter1_windows/lang/" + name;
@@ -236,3 +248,8 @@ var filename = orig_filename;
 var type = "orig";
 
 var orig_map = scr_84_load_map_json(orig_filename);
+```
+
+---
+
+## End of Document
