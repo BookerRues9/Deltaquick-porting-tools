@@ -264,7 +264,21 @@ To enable or disable them:
 3. From this menu, you can **enable or disable touch controls** at any time.
 
 ---
+## Fix Black Screen in All Chapters
 
+`THIS MUST BE DONE IN UNDERTALE MOD TOOL`
+
+To fix the black screen issue that can occur in all chapters when running on Deltaquick:
+Open Undertale Mod Tool
+Navigate to the following object:
+obj_initializer2_Step_0
+Locate this line:
+if (audio_group_is_loaded(1))
+Replace it with:
+if (os_type == os_android || os_type == os_windows)
+This modification ensures proper initialization on Android (and keeps compatibility with Windows), preventing the game from getting stuck on a black screen during startup.
+
+---
 ##  Credits
 
 - **McArthur** — Deltaquick
