@@ -108,7 +108,7 @@ It returns the following path as a string:
 ### Recommended usage
 
 ```gml
-// obj_time_Create_0
+// obj_initializer2_Create_0
 global.savepath = init_external_dir();
 ```
 
