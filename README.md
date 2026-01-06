@@ -93,7 +93,9 @@ src_chapterswitch
 ```
 > Do not add game_change_android directly to other chapter objects, as this may cause unexpected behavior.
 
+
 ### To change chapters:
+
 ```gml
 game_change_android("chapter" + chapstring + "_windows");
 ```
@@ -103,8 +105,6 @@ game_change_android("chapter" + chapstring + "_windows");
 ```gml
 game_change_android("");
 ```
-
----
 
 ##  `init_external_dir()`
 
