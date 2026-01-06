@@ -9,8 +9,11 @@ This document is intended **only for advanced users** who know how to use **Unde
 - It is **100% required** in order to follow this guide and port modifications to **Deltaquick (Android)**.
 
 ---
+
 ## Scripts
-link to [`scripts`](https://github.com/BookerRues9/Deltaquick-porting-tools/tree/0a89a91266180e4d0eceabdb7e82c34d73feda35/scripts)
+
+> link to [`scripts`](https://github.com/BookerRues9/Deltaquick-porting-tools/tree/0a89a91266180e4d0eceabdb7e82c34d73feda35/scripts)
+
 ---
 
 ## Deltaquick File System
