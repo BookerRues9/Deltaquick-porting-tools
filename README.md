@@ -83,19 +83,17 @@ This function allows switching between different `game.droid` files.
 
 ### Change chapter
 
->In the Chapter Select screen, the game_change_android call must be placed in:
-
+> In the Chapter Select screen, the game_change_android call must be placed in:
 ```
 gmlobj_CHAPTER_SELECT_Create_0
 ```
-
->For all other chapters, chapter switching is handled through:
-
+> For all other chapters, chapter switching is handled through:
 ```gml
 src_chapterswitch
 ```
+> Do not add game_change_android directly to other chapter objects, as this may cause unexpected behavior.
 
-Do not add game_change_android directly to other chapter objects, as this may cause unexpected behavior.
+### To change chapters:
 ```gml
 game_change_android("chapter" + chapstring + "_windows");
 ```
