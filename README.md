@@ -12,7 +12,7 @@ This guide contains the steps and tools necessary to port modifications to **Del
 To proceed, you will need the following tools:
 
 * **UndertaleModTool:** [LINK]
-* **APK Editor Studio:** [LINK]
+* **APK Editor Studio:** (https://qwertycube.com/apk-editor-studio/)
 * **Deltaquick:** [LINK]
 * **UndertaleModTool Scripts:** [LINK]
 
