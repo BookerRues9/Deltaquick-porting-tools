@@ -37,7 +37,7 @@ To adapt modifications, you must understand how Deltaquick manages its internal 
 * `/files/chapter1_windows/` to `/chapter4_windows/`  
     → Assets required for each specific chapter.
 
-[IMAGEN] *(Save Manager interface screenshot)*
+![Save Manager Overview](./photos/save_manager.png)
 
 ---
 
