@@ -215,7 +215,7 @@ video_open(global.savepath + "chapter3_windows/vid/" + file_name + ".mp4");
 
 Troubleshooting & Additional Info
 - Touch Controls: Built-in. Swipe right during gameplay to open the configuration menu.
-- Crashes: For a detailed guide on solving common crashes, visit: [LINK]
+* **Crashes:** For a detailed guide on solving common crashes, visit: [Troubleshooting Guide](./crash%20fixes/README.md)
 ### Credits
 - Toby Fox: Deltarune
 - Angela Puzzle: Deltarune Android Port (2021-2026)
