@@ -79,10 +79,10 @@ if (os_type == os_android)
     global.savepath = init_external_dir();
 else
     global.savepath = game_save_id;
+```
 3. Sound Initialization Fix
 In Chapters 1 through 4, locate the script gml_GlobalScript_snd_init and replace it with:
-
-Fragmento de código
+```gml
 function snd_init(arg0)
 {
     var dir = "mus/";
@@ -124,7 +124,6 @@ In obj_initializer2_Step_0, replace the audio group check:
 Before: if (audio_group_is_loaded(1))
 ```
 After:
-
 ```gml
 if (os_type == os_android || os_type == os_windows)
 ```
@@ -142,7 +141,6 @@ case os_android:
 ```
 2. Universal Chapter Switch Script
 Replace the entire content of gml_GlobalScript_scr_chapterswitch with:
-
 ```gml
 function scr_chapterswitch(arg0 = 0)
 {
