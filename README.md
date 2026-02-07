@@ -51,16 +51,21 @@ Each chapter is stored in a specific APK pack. Follow these steps to modify them
 * `chapter2_windows.apk` → **Chapter 2**
 * `chapter3_windows.apk` → **Chapter 3**
 * `chapter4_windows.apk` → **Chapter 4**
+**NOTE:** These files are always generated after patching data.win with xdelta files; the app generates them automatically.
 
-### 2. Extraction and Replacement
-1.  Open **Save Manager**, long-press the desired APK, and select **Extract**.
-2.  Transfer the APK to your PC and open it with **APK Editor Studio**.
-3.  Click **Open Contents**, navigate to the `assets` folder, and replace the `game.droid` file.
-4.  Click **Save APK**.
-5.  Transfer the modified APK back to your phone. In the Save Manager's `packs` folder, press **Load Files** and select your modified APK.
-    * *Note: The filename must be identical to the original.*
+### 2. Modification Process
 
----
+1. **Extraction:** Open **Save Manager**, long-press the desired APK, and select **Extract**. Transfer the APK to your PC.
+2. **Decompilation:** Open the APK with **APK Editor Studio**.
+3. **Open Contents:** Click the **Open Contents** button to access the internal files.
+   <br><img src="./photos/open_contents.png" alt="APK Editor Studio Button" width="500">
+4. **Replacement:** Navigate to the `assets` folder.
+   <br><img src="./photos/assets.png" alt="Assets Folder Location" width="500">
+   <br>Inside the folder, replace the existing `game.droid` with your modified version.
+   <br><img src="./photos/assets_files.png" alt="Inside Assets Folder" width="500">
+5. **Rebuilding:** Click **Save APK** in APK Editor Studio.
+6. **Deployment:** Transfer the modified APK back to your phone. In the Save Manager's `packs` folder, press **Load Files** and select your modified APK.
+   * *Note: The filename must remain identical to the original (e.g., chapter4_windows.apk).*
 
 ## Technical Adaptation (UndertaleModTool)
 
