@@ -36,7 +36,6 @@ This crash occurs during the Knight encounter due to surface handling issues on 
 
 ### 2. Code Modification
 You must update three specific objects to bypass the surface creation crash.
-
 **Object:** `gml_Object_obj_knight_split_growtangle_Other_11`  
 **Replace:**
 ```gml
@@ -47,19 +46,23 @@ spr_custom_box = sprite_create_from_surface(other.source_surf, 0, 0, 170, 170, t
 spr_custom_box = spr_custom_box_nocrash;
 ```
 **Object:** `gml_Object_obj_battle_cleanup_Alarm_0`
+
 **Replace:**
 ```gml
 if (sprite_exists(custom_box_sprite))
 ```
+
 **With:**
 ```gml
 if (sprite_exists(custom_box_sprite) && custom_box_sprite != spr_custom_box_nocrash)
 ```
 **Object:** `gml_Object_obj_battle_cleanup_Step_0`
+
 **Replace:**
 ```gml
 if (sprite_exists(custom_box_sprite))
 ```
+
 **With:**
 ```gml
 if (sprite_exists(custom_box_sprite) && custom_box_sprite != spr_custom_box_nocrash)
