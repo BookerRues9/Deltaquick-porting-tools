@@ -125,11 +125,11 @@ In all chapters, find scr_84_load_json and replace the existing path logic with:
 
 ```gml
 var name = "lang_" + global.lang + ".json";
-var orig_filename = "lang/" + name;
-var new_filename = "lang-new/" + name;
-var filename = orig_filename;
-var type = "orig";
-var orig_map = scr_84_load_map_json(orig_filename);
+    var orig_filename = working_directory + name;
+    var new_filename = working_directory + name;
+    var filename = orig_filename;
+    var type = "orig";
+    var orig_map = scr_84_load_map_json(orig_filename);
 ```
 5. Black Screen Fix (Startup)
 In obj_initializer2_Step_0, replace the audio group check:
