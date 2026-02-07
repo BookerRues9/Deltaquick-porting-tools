@@ -120,8 +120,9 @@ var orig_map = scr_84_load_map_json(orig_filename);
 ```
 5. Black Screen Fix (Startup)
 In obj_initializer2_Step_0, replace the audio group check:
+Before:
 ```gml
-Before: if (audio_group_is_loaded(1))
+if (audio_group_is_loaded(1))
 ```
 After:
 ```gml
@@ -211,15 +212,16 @@ To fix the video loading for the Tenna sequence, navigate to obj_ch3_couch_video
 ```gml
 video_open(global.savepath + "chapter3_windows/vid/" + file_name + ".mp4");
 ```
+
 Troubleshooting & Additional Info
-Touch Controls: Built-in. Swipe right during gameplay to open the configuration menu.
-Crashes: For a detailed guide on solving common crashes, visit: [LINK]
-Credits
-Toby Fox: Deltarune
-Angela Puzzle: Deltarune Android Port (2021-2026)
-ateskit: Deltarune Android (2025-2026)
-Booker: Deltaquick Android + Porting tools
-mattiw: Base touch controls
-jockeholm: Undertale Android port 2018
-grossley: UndertaleModTool
-Google & YoYo Games: Android Studio / Game Maker Studio
+- Touch Controls: Built-in. Swipe right during gameplay to open the configuration menu.
+- Crashes: For a detailed guide on solving common crashes, visit: [LINK]
+### Credits
+- Toby Fox: Deltarune
+- Angela Puzzle: Deltarune Android Port (2021-2026)
+- ateskit: Deltarune Android (2025-2026)
+- Booker: Deltaquick Android + Porting tools
+- mattiw: Base touch controls
+- jockeholm: Undertale Android port 2018
+- grossley: UndertaleModTool
+- Google & YoYo Games: Android Studio / Game Maker Studio
