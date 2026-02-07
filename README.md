@@ -58,7 +58,7 @@ Each chapter is stored in a specific APK pack. Follow these steps to modify them
 1. **Extraction:** Open **Save Manager**, long-press the desired APK, and select **Extract**. Transfer the APK to your PC.
 2. **Decompilation:** Open the APK with **APK Editor Studio**.
 3. **Open Contents:** Click the **Open Contents** button to access the internal files.
-   <br><img src="./photos/open_contents.png" alt="APK Editor Studio Button" width="500">
+   <br><img src="./photos/open_content.png" alt="APK Editor Studio Button" width="500">
 4. **Replacement:** Navigate to the `assets` folder.
    <br><img src="./photos/assets.png" alt="Assets Folder Location" width="500">
    <br>Inside the folder, replace the existing `game.droid` with your modified version.
