@@ -11,6 +11,7 @@ This guide contains the steps and tools necessary to port modifications to **Del
 
 To proceed, you will need the following tools:
 
+* [Deltarune PC Windows Steam Version For setting deltaquick](https://store.steampowered.com/app/1671210/DELTARUNE/)
 * [UndertaleModTool](https://github.com/UnderminersTeam/UndertaleModTool)
 * [APK Editor Studio](https://qwertycube.com/apk-editor-studio/)
 * [Deltaquick](https://play.google.com/store/apps/details?id=com.bookerpuzzle.deltaquick&pcampaignid=web_share)
