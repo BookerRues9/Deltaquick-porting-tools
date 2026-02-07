@@ -1,313 +1,227 @@
 # Deltaquick Porting Tools
 
-## Important Notice
+This guide contains the steps and tools necessary to port modifications to **Deltaquick** (Deltarune Android Launcher).
 
-**WARNING:**  
-This document is intended **only for advanced users** who know how to use **Undertale Mod Tool** and how to modify **Deltarune for Windows**.
-
-- **Undertale Mod Tool** is a program used to modify Undertale / Deltarune on **Windows and Linux**.
-- It is **100% required** in order to follow this guide and port modifications to **Deltaquick (Android)**.
+> [!CAUTION]
+> **IMPORTANT:** This document is intended for **advanced users** who are familiar with modifying Deltarune/Undertale.
 
 ---
 
-## Scripts
+## Prerequisites
 
-link to [`scripts`](https://github.com/BookerRues9/Deltaquick-porting-tools/tree/0a89a91266180e4d0eceabdb7e82c34d73feda35/scripts)
+To proceed, you will need the following tools:
 
----
+* **UndertaleModTool:** [LINK]
+* **APK Editor Studio:** [LINK]
+* **Deltaquick:** [LINK]
+* **UndertaleModTool Scripts:** [LINK]
 
-## Deltaquick File System
-
-Before adapting your modifications to Deltaquick, you must understand how its file system works.
-
-> **IMPORTANT:**  
-> You can only access these files **through the Save Manager built into Deltaquick**.
-
-### File paths used by Deltaquick
-
-```
-/data/user/0/com.bookerpuzzle.deltaquick/files/game.droid
-    → Chapter Select
-
-/data/user/0/com.bookerpuzzle.deltaquick/files/chapter1_windows/game.droid
-    → Chapter 1
-
-/data/user/0/com.bookerpuzzle.deltaquick/files/chapter2_windows/game.droid
-    → Chapter 2
-
-/data/user/0/com.bookerpuzzle.deltaquick/files/chapter3_windows/game.droid
-    → Chapter 3
-
-/data/user/0/com.bookerpuzzle.deltaquick/files/chapter4_windows/game.droid
-    → Chapter 4
-
-/data/user/0/com.bookerpuzzle.deltaquick/files/mus/
-    → Deltarune music files
-```
-
-### Loading a modified `data.win`
-
-1. Rename your modified `data.win` to **`game.droid`**
-2. Open **Deltaquick → Save Manager**
-3. Replace the file inside the corresponding chapter folder
-
-### Compatibility Warning
-
-Deltaquick is **only compatible with the latest official version of Deltarune**.  
-The **2018 and 2021 Demo versions are NOT supported**.
+**Requirement:** Ensure Deltaquick is configured and updated to **version 1.1.9** or higher.
 
 ---
 
-## Undertale Mod Tool Scripts
+## File System Overview
 
-Deltaquick includes a script called **`tools.csx`**.
+To adapt modifications, you must understand how Deltaquick manages its internal storage. Deltaquick uses its own **Save Manager** to extract, delete, and copy files.
 
-### Installing `tools.csx`
+### Directory Structure:
 
-1. Open **Undertale Mod Tool**
-2. Go to `Scripts → Run Other Script`
-3. Select `tools.csx`
-4. Run the script
+* `/data/user/0/com.bookerdev.deltaquick/files/deltarune_save_files/`  
+    → Save data and game progress.
+* `/data/user/0/com.bookerdev.deltaquick/files/xdelta/`  
+    → XDelta patches for game fixes.
+* `/files/packs/`  
+    → Contains APK files with the `game.droid` for each chapter (visible after configuration).
+* `/files/mus/`  
+    → Global directory for music files.
+* `/files/chapter1_windows/` to `/chapter4_windows/`  
+    → Assets required for each specific chapter.
 
-After running it, two new functions will be available:
-
-- `game_change_android()`
-- `init_external_dir()`
-
-> **ALL OF THIS MUST BE DONE INSIDE UNDERTALE MOD TOOL**
-
----
-
-## `game_change_android()`
-
-This function allows switching between different `game.droid` files.
-
-### Limitations
-
-- You can only switch between folders named `chapterX_windows`
-- Using any other name **will not work**
-
-### Change chapter
-
-> In the Chapter Select screen, the game_change_android call must be placed in:
-```
-gmlobj_CHAPTER_SELECT_Create_0
-```
-> For all other chapters, chapter switching is handled through:
-```gml
-src_chapterswitch
-```
-> Do not add game_change_android directly to other chapter objects, as this may cause unexpected behavior.
-
-
-### To change chapters:
-
-```gml
-game_change_android("chapter" + chapstring + "_windows");
-```
-
-### Return to Chapter Select
-
-```gml
-game_change_android("");
-```
-
-##  `init_external_dir()`
-
-This function grants `game.droid` access to the app’s internal storage, removing Android file access limitations.
-
-It returns the following path as a string:
-
-```
-/data/user/0/com.bookerpuzzle.deltaquick/files/
-```
-
-### Recommended usage
-
-```gml
-// obj_initializer2_Create_0
-global.savepath = init_external_dir();
-```
-
-This global variable is **mandatory** to avoid breaking the save system.
+[IMAGEN] *(Save Manager interface screenshot)*
 
 ---
 
-## Save System Fix (MANDATORY)
+## Replacing `game.droid` Files
 
-To properly adapt the save system for Deltaquick, you **must modify the following functions in ALL `game.droid` files**:
+Each chapter is stored in a specific APK pack. Follow these steps to modify them:
 
-```gml
-ossafe_file_delete         = return file_delete(global.savepath + arg0);
-ossafe_file_exists         = return file_exists(global.savepath + arg0);
-ossafe_file_text_open_read = return file_text_open_read(global.savepath + arg0);
-ossafe_file_text_open_write= return file_text_open_write(global.savepath + arg0);
-ossafe_ini_open            = ini_open(global.savepath + arg0);
-```
+### 1. Identify the Pack
+* `selector.apk` → **Chapter Select**
+* `chapter1_windows.apk` → **Chapter 1**
+* `chapter2_windows.apk` → **Chapter 2**
+* `chapter3_windows.apk` → **Chapter 3**
+* `chapter4_windows.apk` → **Chapter 4**
 
-> **THIS STEP IS REQUIRED**  
-> Skipping it will cause save data corruption.
-
----
-
-## Special Case: Deltarune Chapter 3 Video Fix
-
-Chapter 3 loads a video from the following path:
-
-```
-/data/user/0/com.bookerpuzzle.deltaquick/files/chapter3_windows/vid/
-```
-
-### How to fix
-
-1. Open **Undertale Mod Tool**
-2. Navigate to object: `obj_ch3_couch_video_Create_0`
-3. Find this line:
-
-```gml
-video_open("vid/" + file_name + ".mp4");
-```
-
-4. Replace it (or add an Android case) with:
-
-```gml
-video_open(global.savepath + "chapter3_windows/vid/" + file_name + ".mp4");
-```
+### 2. Extraction and Replacement
+1.  Open **Save Manager**, long-press the desired APK, and select **Extract**.
+2.  Transfer the APK to your PC and open it with **APK Editor Studio**.
+3.  Click **Open Contents**, navigate to the `assets` folder, and replace the `game.droid` file.
+4.  Click **Save APK**.
+5.  Transfer the modified APK back to your phone. In the Save Manager's `packs` folder, press **Load Files** and select your modified APK.
+    * *Note: The filename must be identical to the original.*
 
 ---
 
-## FIX_AUDIO.csx
+## Technical Adaptation (UndertaleModTool)
 
-This script fixes **sound effects (SFX)** for each chapter.
+These modifications are mandatory for the game to function correctly on Android.
 
-- **Does NOT fix music**
-- Must be executed **only once**
-- Apply it to all chapters **EXCEPT Chapter Select**
+### 1. Script Injection
+Open your `game.droid` and run the following scripts via `Scripts -> Run Other Script`:
+* `tools.csx`: Adds essential tools.
+* `FIX_AUDIO.csx`: Fixes SFX (must be applied to all files EXCEPT Chapter Select).
 
----
-
-## Fixing Music Playback
-
-After completing the previous steps, you may notice that music does not play.
-
-### How to fix
-
-1. Open **Undertale Mod Tool**
-2. Locate the script: `snd_init`
-3. Replace the music directory logic with:
+### 2. External Directory Setup
+In **Chapters 1 through 4**, navigate to `obj_initializer2_Create_0` and add:
 
 ```gml
-if (global.launcher)
+if (os_type == os_android)
+    global.savepath = init_external_dir();
+else
+    global.savepath = game_save_id;
+3. Sound Initialization Fix
+In Chapters 1 through 4, locate the script gml_GlobalScript_snd_init and replace it with:
+
+Fragmento de código
+function snd_init(arg0)
 {
+    var dir = "mus/";
+    
+    if (global.launcher)
+    {
+        if (os_type == os_android)
+            dir = global.savepath + "mus/";
+        else
+            dir = working_directory + "../mus/";
+    }
+    
     if (os_type == os_android)
         dir = global.savepath + "mus/";
     else
         dir = working_directory + "../mus/";
+    
+    initsongvar = dir + arg0;
+    _mystream = audio_create_stream(initsongvar);
+    _astream = instance_create(0, 0, obj_astream);
+    _astream.mystream = _mystream;
+    return _mystream;
 }
-
-if (os_type == os_android)
-    dir = global.savepath + "mus/";
-else
-    dir = working_directory + "../mus/";
 ```
-
-> This must be done in **every chapter from Chapter 1 to Chapter 4**.
-
----
-
-## Loading `game.droid / data.win` into Deltaquick
-
-1. Rename your modified `data.win` to **`game.droid`**
-2. Open **Deltaquick → Save Manager**
-3. Enter the desired chapter folder (e.g. `chapter4_windows`)
-4. Press **Load Files**
-5. Select your `game.droid`
-
-The existing file will be replaced.  
-Repeat this process for each chapter.
-
----
-
-## Chapter 1 Language Fix
-
-> **THIS MUST ALSO BE DONE IN UNDERTALE MOD TOOL**
-
-Chapter 1 loads its strings from `lang_en.json`.
-
-### Script to edit
-`scr_84_lang_load`
-
-### Replace this code
+4. Language Loading Fix
+In all chapters, find scr_84_load_json and replace the existing path logic with:
 
 ```gml
 var name = "lang_" + global.lang + ".json";
-var orig_filename = working_directory + "lang/" + name;
-var new_filename = working_directory + "lang-new/" + name;
+var orig_filename = "lang/" + name;
+var new_filename = "lang-new/" + name;
 var filename = orig_filename;
 var type = "orig";
 var orig_map = scr_84_load_map_json(orig_filename);
 ```
-
-### With this
+5. Black Screen Fix (Startup)
+In obj_initializer2_Step_0, replace the audio group check:
+```gml
+Before: if (audio_group_is_loaded(1))
+```
+After:
 
 ```gml
-var name = "lang_" + global.lang + ".json";
-
-var orig_filename = global.savepath + "chapter1_windows/lang/" + name;
-var new_filename  = global.savepath + "chapter1_windows/lang-new/" + name;
-
-if (!file_exists(orig_filename)) {
-    show_message_async("LANG NOT FOUND IN: " + orig_filename);
-    exit;
-}
-
-var filename = orig_filename;
-var type = "orig";
-
-var orig_map = scr_84_load_map_json(orig_filename);
-```
-
----
-
-
-##  Touch Controls
-
-Deltaquick includes built-in **touch controls**.
-
-To enable or disable them:
-
-1. Swipe **to the right** on the screen while the game is running.
-2. A menu will appear.
-3. From this menu, you can **enable or disable touch controls** at any time.
-
----
-## Fix Black Screen in All Chapters
-
-`THIS MUST BE DONE IN UNDERTALE MOD TOOL`
-
-To fix the black screen issue that can occur in all chapters when running on Deltaquick:
-Open Undertale Mod Tool
-Navigate to the following object:
-
-```gml 
-obj_initializer2_Step_0.
-```
-Locate this line:
-```gml 
-if (audio_group_is_loaded(1))
-```
-Replace it with:
-
-```gml 
 if (os_type == os_android || os_type == os_windows)
 ```
+Chapter Switching (game_change)
+1. Chapter Select Configuration
+In CHAPTER_SELECT (obj_CHAPTER_SELECT_Create_0), add the Android case:
+```gml
+case os_macosx:
+    game_change("chapter" + chapstring + "_mac", parameters);
+    break;
 
+case os_android:
+    game_change_android("chapter" + chapstring + "_windows");
+    break;
+```
+2. Universal Chapter Switch Script
+Replace the entire content of gml_GlobalScript_scr_chapterswitch with:
 
-This modification ensures proper initialization on Android (and keeps compatibility with Windows), preventing the game from getting stuck on a black screen during startup.
-
----
-##  Credits
-
-- **McArthur** — Deltaquick
-- **AngelinePuzzle** — Scripts
-
+```gml
+function scr_chapterswitch(arg0 = 0)
+{
+    var parameters = get_chapter_switch_parameters();
+    
+    if (arg0 == 0)
+    {
+        if (scr_is_switch_os())
+        {
+            game_change("rom:/", parameters);
+        }
+        else
+        {
+            switch (os_type)
+            {
+                case os_windows:
+                    game_change("/../", "-game data.win" + parameters);
+                    break;
+                case os_ps4:
+                    game_change("", "-game /app0/games/game.win" + parameters);
+                    break;
+                case os_ps5:
+                    game_change("", "-game /app0/games/game.win" + parameters);
+                    break;
+                case os_macosx:
+                    game_change("..", parameters);
+                    break;
+                case os_android:
+                    game_change_android("");
+                    break;
+            }
+        }
+    }
+    else
+    {
+        var chapstring = string(arg0);
+        
+        if (scr_is_switch_os())
+        {
+            game_change("rom:/chapter" + chapstring + "_switch/", parameters);
+        }
+        else
+        {
+            switch (os_type)
+            {
+                case os_windows:
+                    game_change("/../chapter" + chapstring + "_windows", "-game data.win" + parameters);
+                    break;
+                case os_ps4:
+                    game_change("", "-game /app0/games/chapter" + chapstring + "_ps4/game.win" + parameters);
+                    break;
+                case os_ps5:
+                    game_change("", "-game /app0/games/chapter" + chapstring + "_ps5/game.win" + parameters);
+                    break;
+                case os_macosx:
+                    game_change("../chapter" + chapstring + "_mac", parameters);
+                    break;
+                case os_android:
+                    game_change_android("chapter" + chapstring + "_windows");
+                    break;
+            }
+        }
+    }
+}
+```
+Chapter 3 Video Fix
+To fix the video loading for the Tenna sequence, navigate to obj_ch3_couch_video_Create_0 and update the call:
+```gml
+video_open(global.savepath + "chapter3_windows/vid/" + file_name + ".mp4");
+```
+Troubleshooting & Additional Info
+Touch Controls: Built-in. Swipe right during gameplay to open the configuration menu.
+Crashes: For a detailed guide on solving common crashes, visit: [LINK]
+Credits
+Toby Fox: Deltarune
+Angela Puzzle: Deltarune Android Port (2021-2026)
+ateskit: Deltarune Android (2025-2026)
+Booker: Deltaquick Android + Porting tools
+mattiw: Base touch controls
+jockeholm: Undertale Android port 2018
+grossley: UndertaleModTool
+Google & YoYo Games: Android Studio / Game Maker Studio
