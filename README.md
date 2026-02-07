@@ -7,6 +7,11 @@ This guide contains the steps and tools necessary to port modifications to **Del
 
 ---
 
+> [!IMPORTANT]
+> This guide will be updated as new Deltarune chapters are released. If you encounter any bugs or crashes, please refer to the troubleshooting documentation: [Click here to fix crashes](./crash%20fixes/README.md)
+
+---
+
 ## Prerequisites
 
 To proceed, you will need the following tools:
