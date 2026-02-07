@@ -11,10 +11,10 @@ This guide contains the steps and tools necessary to port modifications to **Del
 
 To proceed, you will need the following tools:
 
-* **UndertaleModTool:** [LINK]
-* **APK Editor Studio:** (https://qwertycube.com/apk-editor-studio/)
-* **Deltaquick:** [LINK]
-* **UndertaleModTool Scripts:** [LINK]
+* [UndertaleModTool](https://github.com/UnderminersTeam/UndertaleModTool)
+* [APK Editor Studio](https://qwertycube.com/apk-editor-studio/)
+* [Deltaquick](https://play.google.com/store/apps/details?id=com.bookerpuzzle.deltaquick&pcampaignid=web_share)
+* [UndertaleModTool Scripts](https://github.com/BookerRues9/Deltaquick-porting-tools/tree/main/scripts)
 
 **Requirement:** Ensure Deltaquick is configured and updated to **version 1.1.9** or higher.
 
