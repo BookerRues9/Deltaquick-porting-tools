@@ -28,7 +28,7 @@ To resolve crashes in this specific room, you must modify the object layers to e
 This crash occurs during the Knight encounter due to surface handling issues on Android.
 
 ### 1. Sprite Preparation
-1. Download the fixed sprite package: [spr_custom_box_nocrash.zip](LINK_HERE)
+1. Download the fixed sprite package: [spr_custom_box_nocrash.zip](https://github.com/BookerRues9/Deltaquick-porting-tools/raw/main/crash%20fixes/sprites.zip)
 2. Extract the contents into a folder named `sprites`.
 3. In UndertaleModTool (with Chapter 3 `game.droid` open), go to:
    `Scripts > Resource Importers > importGraphics.csx`
