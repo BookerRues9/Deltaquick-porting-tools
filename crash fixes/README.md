@@ -46,7 +46,7 @@ spr_custom_box = sprite_create_from_surface(other.source_surf, 0, 0, 170, 170, t
 ```gml
 spr_custom_box = spr_custom_box_nocrash;
 ```
-Object: gml_Object_obj_battle_cleanup_Alarm_0
+**Object:** `gml_Object_obj_battle_cleanup_Alarm_0`
 **Replace:**
 ```gml
 if (sprite_exists(custom_box_sprite))
@@ -55,7 +55,7 @@ if (sprite_exists(custom_box_sprite))
 ```gml
 if (sprite_exists(custom_box_sprite) && custom_box_sprite != spr_custom_box_nocrash)
 ```
-Object: gml_Object_obj_battle_cleanup_Step_0
+**Object:** `gml_Object_obj_battle_cleanup_Step_0`
 **Replace:**
 ```gml
 if (sprite_exists(custom_box_sprite))
