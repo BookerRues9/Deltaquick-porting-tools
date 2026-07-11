@@ -2,7 +2,7 @@
 
 This guide contains the steps and tools necessary to port modifications to **Deltaquick** (Deltarune Android Launcher).
 > [!IMPORTANT]
-> ** — GUIDE UPDATED 11/07/2026**
+> GUIDE UPDATED 11/07/2026**
 > This guide was updated on 11/07/2026 to describe and use the new optimizations in DeltaQuick 1.3.8 and later.
 
 
