@@ -58,17 +58,21 @@ DeltaQuick stores all extracted game files inside its private application direct
 > [!NOTE]
 > DeltaQuick loads game files using the following priority:
 >
-> 1. `chapterX_windows/game.droid`
-> 2. `game.droid` (root directory)
-> 3. Chapter APK packs located in `/files/packs/`
+> 1. Chapter APK packs located in `/files/packs/`
+> 2. `chapterX_windows/game.droid`
+> 3. `game.droid` (root directory)
+>
+> If a chapter pack exists, DeltaQuick will always load it first. Loose `game.droid` files are only used when the corresponding pack is not available.
 
-> [!IMPORTANT]
-> If you want DeltaQuick to load the files stored inside `/files/packs/`, you **must delete all loose `game.droid` files** located in:
+> [!TIP]
+> For older or lower-end devices that use **eMMC storage**, it is recommended to use loose `game.droid` files instead of APK packs.
 >
-> - `/data/user/0/com.bookerdev.deltaquick/files/game.droid`
-> - `/data/user/0/com.bookerdev.deltaquick/files/chapter1_windows/` ... `/chapter5_windows/`
+> Loading assets directly from loose files reduces storage overhead and can improve loading times on slower flash memory.
+
+> [!TIP]
+> For devices with **UFS storage (UFS 2.x, UFS 3.x, or newer)**, using chapter APK packs is recommended.
 >
-> Otherwise, DeltaQuick will always prioritize the loose `game.droid` files and ignore the APK packs.
+> UFS storage provides significantly faster random read performance, so the difference in loading speed is negligible while keeping all chapter files neatly organized inside the packs.
 
 <img src="./photos/save_manager.png" alt="Save Manager Overview" width="400">
 
@@ -76,16 +80,21 @@ DeltaQuick stores all extracted game files inside its private application direct
 
 ## Replacing `game.droid` Files
 
-Each chapter is stored in a specific APK pack. Follow these steps to modify them:
+Each Deltarune chapter is distributed as an individual APK pack.
 
-### 1. Identify the Pack
-* `selector.pack` → **Chapter Select**
-* `chapter1_windows.pack` → **Chapter 1**
-* `chapter2_windows.pack` → **Chapter 2**
-* `chapter3_windows.pack` → **Chapter 3**
-* `chapter4_windows.pack` → **Chapter 4**
-* `chapter5_windows.pack` → **Chapter 5**
-**NOTE:** These files are always generated after the select deltarune folder the app generates them automatically.
+### Supported Packs
+
+| Pack | Description |
+|------|-------------|
+| `selector.pack` | Chapter Select |
+| `chapter1_windows.pack` | Chapter 1 |
+| `chapter2_windows.pack` | Chapter 2 |
+| `chapter3_windows.pack` | Chapter 3 |
+| `chapter4_windows.pack` | Chapter 4 |
+| `chapter5_windows.pack` | Chapter 5 |
+
+> [!NOTE]
+> These packs are generated automatically after selecting your Deltarune installation folder in DeltaQuick for the first time.
 
 ### 2. Modification Process
 
