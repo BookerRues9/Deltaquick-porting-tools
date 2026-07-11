@@ -1,7 +1,7 @@
 # Deltaquick Porting Tools
 
 This guide contains the steps and tools necessary to port modifications to **Deltaquick** (Deltarune Android Launcher).
-> [!WARNING]
+> [!INFO]
 > **DISCONTINUED GUIDE — 11/06/2026**
 > This guide is no longer maintained or updated. The code or steps described here may be outdated or may not work with newer versions.
 
