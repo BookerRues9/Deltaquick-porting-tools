@@ -81,7 +81,7 @@ DeltaQuick stores all extracted game files inside its private application direct
 
 ## Replacing `game.droid` Files
 
-Each Deltarune chapter is distributed as an individual APK pack.
+Each Deltarune chapter is loaded as an individual APK pack.
 
 ### Supported Packs
 
