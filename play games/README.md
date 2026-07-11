@@ -193,7 +193,126 @@ unlock_trophy = function(arg0)
 Append the following code **at the end of the event**:
 
 ```gml
-// Paste the entire async Google Play Games code here
+if (!ds_map_exists(async_load, "type"))
+    exit;
+
+var _type = ds_map_find_value(async_load, "type");
+
+if (_type == "GooglePlayServices_IsAuthenticated")
+{
+    if (!ds_map_find_value(async_load, "success"))
+        exit;
+    
+    if (ds_map_find_value(async_load, "isAuthenticated"))
+    {
+        show_debug_message("GooglePlayServices Player Authenticated automatically.");
+        googleplayservices_achievements_GetStatus(false);
+    }
+    else
+    {
+        show_debug_message("GooglePlayServices not authenticated, requesting manual Sign-In.");
+        googlePlayServices_SignIn();
+    }
+}
+
+if (_type == "GooglePlayServices_SignIn")
+{
+    if (!ds_map_find_value(async_load, "success"))
+        exit;
+    
+    if (ds_map_find_value(async_load, "isAuthenticated"))
+    {
+        show_debug_message("GooglePlayServices Player Authenticated via manual Sign-In.");
+        googleplayservices_achievements_GetStatus(false);
+    }
+    else
+    {
+        show_debug_message("Lets continue without GooglePlayGameServices");
+    }
+}
+
+if (_type == "GooglePlayServices_Achievements_GetStatus")
+{
+    if (ds_map_exists(async_load, "data"))
+    {
+        var _json_data = ds_map_find_value(async_load, "data");
+        show_debug_message("GetStatus data JSON: " + string(_json_data));
+        
+        if (!is_undefined(_json_data) && _json_data != "")
+        {
+            var _data = json_parse(_json_data);
+            
+            if (is_array(_data))
+            {
+                global.trophies = [];
+                
+                for (var i = 0; i < array_length(_data); i++)
+                {
+                    var _ach = _data[i];
+                    
+                    if (variable_struct_exists(_ach, "id") && variable_struct_exists(_ach, "state"))
+                    {
+                        show_debug_message("Achievement item " + string(i) + ": id=" + string(_ach.id) + " state=" + string(_ach.state));
+                        
+                        for (var j = 0; j < array_length(gp_achievement_ids); j++)
+                        {
+                            if (gp_achievement_ids[j] != _ach.id)
+                                continue;
+                            
+                            if (_ach.state == Achievement_STATE_UNLOCKED)
+                                global.trophies[array_length(global.trophies)] = j;
+                            
+                            break;
+                        }
+                    }
+                }
+                
+                show_debug_message("Total trophies found: " + string(array_length(global.trophies)));
+                
+                if (array_length(global.trophies) >= 30)
+                    disable_trophies();
+            }
+        }
+        else
+        {
+            show_debug_message("Warning: _json_data is empty or undefined.");
+        }
+    }
+    else
+    {
+        show_debug_message("Warning: 'data' key does not exist in async_load for GetStatus.");
+    }
+}
+
+if (_type == "GooglePlayServices_Achievements_Unlock")
+{
+    show_debug_message("Achievement Unlock callback received.");
+    
+    if (ds_map_exists(async_load, "success") && ds_map_find_value(async_load, "success") == true)
+    {
+        var _ach_id = ds_map_find_value(async_load, "achievement_id");
+        show_debug_message("*** GP achievement unlocked OK: " + string(_ach_id));
+    }
+    else
+    {
+        show_debug_message("Unlock failed or 'success' key missing. async_load content: " + string(async_load));
+    }
+}
+
+if (_type == "GooglePlayServices_Achievements_Increment")
+{
+    show_debug_message("Achievement Increment callback received.");
+    
+    if (ds_map_exists(async_load, "success") && ds_map_find_value(async_load, "success") == true)
+    {
+        var _ach_id = ds_map_find_value(async_load, "achievement_id");
+        show_debug_message("*** GP achievement incremented OK: " + string(_ach_id));
+    }
+    else
+    {
+        show_debug_message("Increment failed or 'success' key missing. async_load content: " + string(async_load));
+    }
+}
 ```
 
 > **Copy the complete code provided in this guide without modifications.**
