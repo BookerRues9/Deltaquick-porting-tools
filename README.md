@@ -18,10 +18,11 @@ This guide contains the steps and tools necessary to port modifications to **Del
 > If you encounter any bugs or crashes, please refer to the troubleshooting guide:
 > **[Crash Fixes](./crash%20fixes/README.md)**
 >
-> To enable Google Play Games achievements, follow the setup guide:
-> **[Google Play Games Setup](./play%20games/README.md)**
-
 ---
+> [!TIP]
+> Want to add **Google Play Games achievements** to your mod?
+>
+> Follow the **[Google Play Games Setup Guide](./play%20games/README.md)**.
 
 ## Prerequisites
 
