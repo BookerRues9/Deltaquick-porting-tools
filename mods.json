@@ -14,5 +14,13 @@
     "autor": "Skibididev",
     "imagen_url": "https://images.gamebanana.com/img/ss/mods/sgi_common_thumbs_6853244b7b683_530.webp",
     "descarga_url": "https://gamebanana.com/mods/601376"
+  },
+ {
+    "id": "mod_03",
+    "nombre": "Deltranslate Project - Multilanguage",
+    "descripcion": "Translate DELTARUNE to multiple languages",
+    "autor": "Lazy Desman - Neprim - roberd82 - Dupstepdudeyt - snusxd - El Tío Vyn",
+    "imagen_url": "https://raw.githubusercontent.com/BookerRues9/Deltaquick-porting-tools/main/img/deltranslate.gif",
+    "descarga_url": "https://gamejolt.com/games/android-deltranslate-project/1086889"
   }
 ]
