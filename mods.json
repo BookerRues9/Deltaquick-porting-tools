@@ -1,7 +1,7 @@
 [
  {
     "id": "mod_01",
-    "nombre": "DeltaESP - ¡Parche en ESPAÑOL!",
+    "nombre": "DeltaESP - ¡Parche en ESPAÑOL! (v3.4.3.4)",
     "descripcion": "Capítulos 1-5 ¡YA DISPONIBLE!",
     "autor": "DeltaESP - El Tío Vyn",
     "imagen_url": "https://raw.githubusercontent.com/BookerRues9/Deltaquick-porting-tools/main/img/deltaesp.gif",
@@ -9,7 +9,7 @@
   },
  {
     "id": "mod_02",
-    "nombre": "Deltranslate Project - Multilanguage",
+    "nombre": "Deltranslate Project - Multilanguage (v5.2.8)",
     "descripcion": "Translate DELTARUNE to multiple languages",
     "autor": "Lazy Desman - Neprim - roberd82 - Dupstepdudeyt - snusxd - El Tío Vyn",
     "imagen_url": "https://raw.githubusercontent.com/BookerRues9/Deltaquick-porting-tools/main/img/deltranslate.gif",
