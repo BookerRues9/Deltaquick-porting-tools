@@ -15,8 +15,16 @@
     "imagen_url": "https://raw.githubusercontent.com/BookerRues9/Deltaquick-porting-tools/main/img/deltranslate.gif",
     "descarga_url": "https://gamejolt.com/games/android-deltranslate-project/1086889"
   },
- {
+  {
     "id": "mod_03",
+    "nombre": "Deltarune Enhanced (v5.1.4)",
+    "descripcion": "Enhance your Deltarune experience",
+    "autor": "El Tío Vyn",
+    "imagen_url": "https://raw.githubusercontent.com/BookerRues9/Deltaquick-porting-tools/main/img/enhanced.gif",
+    "descarga_url": "https://gamejolt.com/games/DeltaruneEnhanced/1115943"
+  },
+ {
+    "id": "mod_04",
     "nombre": "YOUR MOD NAME HERE",
     "descripcion": "YOUR MOD DESCRIPTION HERE",
     "autor": "MOD AUTOR",
