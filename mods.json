@@ -15,7 +15,7 @@
     "imagen_url": "https://raw.githubusercontent.com/BookerRues9/Deltaquick-porting-tools/main/img/deltranslate.gif",
     "descarga_url": "https://gamejolt.com/games/android-deltranslate-project/1086889"
   },
-  {
+ {
     "id": "mod_03",
     "nombre": "Deltarune Enhanced (v5.1.4)",
     "descripcion": "Enhance your Deltarune experience",
@@ -25,6 +25,14 @@
   },
  {
     "id": "mod_04",
+    "nombre": "Deltarune Boss Rush (v1.2.15)",
+    "descripcion": "Battle all of your strongest foes!",
+    "autor": "dumbpro555 - El Tío Vyn",
+    "imagen_url": "https://raw.githubusercontent.com/BookerRues9/Deltaquick-porting-tools/main/img/bossrush.gif",
+    "descarga_url": "https://gamejolt.com/games/deltarune-boss-rush-android/1121800"
+  },
+ {
+    "id": "mod_05",
     "nombre": "YOUR MOD NAME HERE",
     "descripcion": "YOUR MOD DESCRIPTION HERE",
     "autor": "MOD AUTOR",
